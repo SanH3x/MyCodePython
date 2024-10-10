@@ -14,7 +14,7 @@ import string
 
 
 def extract_text_from_url(url):
-    # Faz uma requisição HTTP para a URL fornecida
+    # Realiza uma requisição HTTP para as URL fornecidas
     response = requests.get(url)
 
     # Analisa o conteúdo HTML da página
@@ -23,10 +23,10 @@ def extract_text_from_url(url):
     # Extração de todo o texto da página
     paragraphs = soup.find_all('p')
 
-    # Concatena o texto de todos os parágrafos extraídos em uma única string
+    # Concatena os textos de todos os parágrafos extraídos em uma única string
     text = ' '.join([para.get_text() for para in paragraphs])
 
-    # Retorna o texto extraído
+    # Retorna os textos extraído
     return text
 
 
@@ -87,10 +87,10 @@ nlp = spacy.load('en_core_web_sm')
 
 
 def process_text(text):
-    # Tokenizar
+    # Tokenização dos textos
     tokens = word_tokenize(text)
 
-    # Remover stopwords e pontuação
+    # Remoção das stopwords e pontuação
     stop_words = set(stopwords.words('english'))
     tokens = [word for word in tokens if word.lower() not in stop_words and word not in string.punctuation]
 
@@ -102,10 +102,10 @@ def process_text(text):
 
 
 def preprocess_text(text):
-    # Tokenizar o texto em palavras
+    # Tokenização dos textos em palavras
     tokens = nltk.word_tokenize(text)
 
-    # Remover stopwords e pontuação
+    # Remoção das stopwords e pontuação
     stop_words = set(stopwords.words('english'))
     tokens_clean = [word for word in tokens if word.isalnum() and word.lower() not in stop_words]
 
@@ -114,7 +114,7 @@ def preprocess_text(text):
 
 # Função para aplicar etiquetadores (Default, Unigram, Bigram, Trigram) no texto tokenizado
 def apply_taggers(text):
-    # Tokeniza o texto
+    # Tokenização dos textos
     tokens = nltk.word_tokenize(text)
 
     # Aplica o etiquetador padrão
@@ -149,7 +149,7 @@ def apply_taggers(text):
     return default_tags, trigram_tags
 
 
-# Função para gerar relatório HTML com os resultados de ambas as URLs
+# Função para gerar um relatório HTML com os resultados de ambas as URLs
 def generate_html_report(original_texts, freq_summaries, luhn_summaries, deep_summaries, pos_tags_list, tagger_results):
     html_content = """
     <html>
