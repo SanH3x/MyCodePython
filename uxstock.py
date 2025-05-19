@@ -86,8 +86,19 @@ if uploaded_file is not None:
 
                 future = model.make_future_dataframe(periods=180)
                 forecast = model.predict(future)
-
+                
                 fig = plot_plotly(model, forecast)
+
+                # Personalização das cores
+                fig.update_traces(
+                    selector=dict(name='y'),  # Pontos históricos (dados reais)
+                    marker=dict(
+                        color='#ffffff',      # Cor dos pontos reais
+                        size=4,               # Tamanho dos pontos
+                        opacity=0.8           # Transparência
+                    ),
+                    line=dict(width=0)        # Remove a linha conectando os pontos
+                )
                 fig.update_layout(
                     title=f"Previsão de Preço da Ação ({selected_ticker})",
                     xaxis_title="Data",
@@ -95,6 +106,7 @@ if uploaded_file is not None:
                     template="plotly_white"
                 )
                 st.plotly_chart(fig, use_container_width=True)
+
 
             with tab2:
                 st.subheader(f"Componentes da Previsão - {selected_ticker}")
