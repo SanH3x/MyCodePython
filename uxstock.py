@@ -15,7 +15,7 @@ Esta aplicação permite fazer análises completas de preços de ações utiliza
 
 1. Faça o upload de um arquivo **CSV ou Excel (.xlsx** contendo os dados históricos)
 2. Selecione o ticker desejado
-3. Veja a análise completa com previsão, componentes e indicadores técnicos
+3. Veja a análise completa com previsão, componentes e indicadores técnicos no período de 180 dias (6 meses)
 """)
 
 uploaded_file = st.file_uploader("Escolha o arquivo CSV ou XLSX", type=["csv", "xlsx"])
