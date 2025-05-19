@@ -3,7 +3,7 @@ import pandas as pd
 from prophet import Prophet
 from prophet.plot import plot_plotly
 import plotly.graph_objs as go
-import openpyxl
+import os
 
 st.set_page_config(page_title="Previsão de Ações com Prophet", layout="wide")
 st.title("Previsão de Ações com Prophet")
@@ -11,16 +11,24 @@ st.title("Previsão de Ações com Prophet")
 st.markdown("""
 Esta aplicação permite fazer previsões de preços de ações utilizando o modelo **Prophet**.
 
-1. Faça o upload de um arquivo CSV contendo as colunas `TICKER`, `DATE`, `CLOSE`.
+1. Faça o upload de um arquivo **CSV ou Excel (.xlsx)** contendo as colunas `TICKER`, `DATE`, `CLOSE`.
 2. Selecione o ticker desejado.
 3. Veja a previsão para os próximos 30 dias.
 """)
 
-uploaded_file = st.file_uploader("Escolha o arquivo CSV", type=["csv"])
+uploaded_file = st.file_uploader("Escolha o arquivo CSV ou XLSX", type=["csv", "xlsx"])
 
 if uploaded_file is not None:
     try:
-        df_full = pd.read_csv(uploaded_file)
+        filename = uploaded_file.name.lower()
+
+        if filename.endswith(".csv"):
+            df_full = pd.read_csv(uploaded_file)
+        elif filename.endswith(".xlsx"):
+            df_full = pd.read_excel(uploaded_file)
+        else:
+            st.error("Formato de arquivo não suportado.")
+            st.stop()
 
         if not {'TICKER', 'DATE', 'CLOSE'}.issubset(df_full.columns):
             st.error("O arquivo deve conter as colunas: TICKER, DATE e CLOSE.")
