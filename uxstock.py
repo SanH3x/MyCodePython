@@ -11,7 +11,7 @@ st.title("Previsão de Ações com Prophet")
 st.markdown("""
 Esta aplicação permite fazer previsões de preços de ações utilizando o modelo **Prophet**.
 
-1. Faça o upload de um arquivo **CSV ou Excel (.xlsx)** contendo as colunas `TICKER`, `DATE`, `CLOSE`.
+1. Faça o upload de um arquivo **CSV ou Excel (.xlsx)** contendo as colunas `ticker`, `ref.date`, `price.close`.
 2. Selecione o ticker desejado.
 3. Veja a previsão para os próximos 30 dias.
 """)
@@ -30,13 +30,13 @@ if uploaded_file is not None:
             st.error("Formato de arquivo não suportado.")
             st.stop()
 
-        if not {'TICKER', 'DATE', 'CLOSE'}.issubset(df_full.columns):
+        if not {'ticker', 'ref.date', 'price.close'}.issubset(df_full.columns):
             st.error("O arquivo deve conter as colunas: TICKER, DATE e CLOSE.")
         else:
-            tickers = df_full['TICKER'].unique().tolist()
+            tickers = df_full['ticker'].unique().tolist()
             selected_ticker = st.selectbox("Selecione o ticker:", sorted(tickers))
 
-            df = df_full[df_full['TICKER'] == selected_ticker][['DATE', 'CLOSE']].copy()
+            df = df_full[df_full['ticker'] == selected_ticker][['ref.date', 'price.close']].copy()
             df.columns = ['ds', 'y']
             df['ds'] = pd.to_datetime(df['ds'])
 
